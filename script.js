@@ -12,7 +12,7 @@ let score = 20;
 
 document.querySelector('.check').addEventListener('click', function () {
   const guessValue = Number(document.querySelector('.guess').value);
-  document.querySelector('.number').textContent = secreteNumber;
+  //document.querySelector('.number').textContent = secreteNumber;
   console.log(guessValue, typeof guessValue);
   if (!guessValue) {
     document.querySelector('.message').textContent = '🔴 No Numebr!';
@@ -39,5 +39,6 @@ document.querySelector('.check').addEventListener('click', function () {
   } else if (secreteNumber === guessValue) {
     document.querySelector('.message').textContent = `🎉 Correct Numebr!`;
     document.querySelector('body').style.backgroundColor = '#91BE62';
+    document.querySelector('.number').textContent = secreteNumber;
   }
 });
