@@ -9,13 +9,24 @@
 
 let secreteNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
+let highScore = 0;
 document.querySelector('.check').addEventListener('click', function () {
   const guessValue = Number(document.querySelector('.guess').value);
   //document.querySelector('.number').textContent = secreteNumber;
   console.log(guessValue, typeof guessValue);
   if (!guessValue) {
     document.querySelector('.message').textContent = '🔴 No Numebr!';
-  } else if (guessValue > secreteNumber) {
+  } 
+  else if (secreteNumber === guessValue) {
+    document.querySelector('.message').textContent = `🎉 Correct Numebr!`;
+    document.querySelector('body').style.backgroundColor = '#91BE62';
+    document.querySelector('.number').textContent = secreteNumber;
+    if( score > highScore){
+      highScore = score;
+      document.querySelector('.highscore').textContent = highScore;
+    }
+  }
+  else if (guessValue > secreteNumber) {
     if (score > 1) {
       document.querySelector('.message').textContent = '⬆️Too High';
       score--;
@@ -35,11 +46,7 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.score').textContent = 0;
       console.log((document.querySelector('.score').textContent = 0));
     }
-  } else if (secreteNumber === guessValue) {
-    document.querySelector('.message').textContent = `🎉 Correct Numebr!`;
-    document.querySelector('body').style.backgroundColor = '#91BE62';
-    document.querySelector('.number').textContent = secreteNumber;
-  }
+  } 
 });
 
 document.querySelector('.again').addEventListener('click', function(){
