@@ -17,3 +17,24 @@ body {
   background-color: #222;
   /* background-color: #60b347; */
 }
+
+.hidden {
+  display: none;
+}
+
+.show-modal {
+  border-radius: 20px;
+  height: 40px;
+  width: auto;
+  padding: 0% 2% 0% 2%;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  background-color: #fff;
+  color: #222;
+}
