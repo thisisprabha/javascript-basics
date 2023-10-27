@@ -3,10 +3,16 @@
 //Seleting Elements
 const score_Element_0 = document.querySelector('#score--0');
 const score_Element_1 = document.querySelector('#score--1');
+const currentScore_0 = document.getElementById('current--0');
+const currentScore_1 = document.getElementById('current--1');
 const dice_Element = document.querySelector('.dice');
 const new_Btn_element = document.querySelector('.btn--new');
 const roll_Btn_element = document.querySelector('.btn--roll');
 const hold_Btn_element = document.querySelector('.btn--hold');
+const player_0 = document.querySelector('.player--0');
+const player_1 = document.querySelector('.player--1');
+
+let currentScore = 0;
 
 //On-start config
 score_Element_0.textContent = 0;
@@ -17,8 +23,22 @@ dice_Element.classList.add('hidden');
 roll_Btn_element.addEventListener('click', function () {
   // 1. Generating a random dice number
   const dice = Math.trunc(Math.random() * 6) + 1;
-  console.log(dice);
+
   // 2. Display dice on screen
   dice_Element.classList.remove('hidden');
-  // 3. Switch to player 2 if dice is 1
+  dice_Element.src = `dice-${dice}.png`;
+
+  // 3. check for dice 1
+  if (dice !== 1) {
+    //adding dice value to current score
+    currentScore += dice;
+    currentScore_0.textContent = currentScore;
+  } else {
+    //switch to next player
+    player_0.classList.remove('player--active');
+    player_1.classList.add('player--active');
+    currentScore += dice;
+    currentScore_2.textContent = currentScore;
+    //console.log('removed');
+  }
 });
