@@ -21,6 +21,44 @@ body {
   /* background-color: #60b347; */
 }
 
+header {
+  width: 100vh;
+  margin: 0 auto;
+  padding: 1% 0 1% 0;
+}
+
+.first {
+  width: 100vh;
+  margin: 0 auto;
+  padding: 1% 0 1% 0;
+}
+.second {
+  width: 100vh;
+  margin: 0 auto;
+  padding: 1% 0 1% 0;
+}
+section .add-todo {
+  padding: 2% 5% 2% 5%;
+  margin-right: 2%;
+  background-color: aquamarine;
+  border: 0;
+  border-radius: 4px;
+}
+
+section .todo-list {
+  padding: 2%;
+  margin-right: 2%;
+  width: 70vh;
+}
+
+section .added-todo {
+  padding-left: 1%;
+}
+
+.check-true {
+  margin: 0;
+}
+
 .left {
   width: 32rem;
   display: block;
