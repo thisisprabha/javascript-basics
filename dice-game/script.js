@@ -26,10 +26,10 @@ const switchPlayer = function () {
 };
 
 const resetGame = function () {
-  document.getElementById(`current--0`).textContent = 0;
-  document.getElementById(`score--0`).textContent = 0;
-  document.getElementById(`current--1`).textContent = 0;
-  document.getElementById(`score--1`).textContent = 0;
+  currentScore_0.textContent = 0;
+  score_Element_0.textContent = 0;
+  currentScore_1.textContent = 0;
+  score_Element_1.textContent = 0;
   activePlayer = 0;
   playing = true;
   currentScore = 0;
@@ -41,6 +41,7 @@ score_Element_0.textContent = 0;
 score_Element_1.textContent = 0;
 dice_Element.classList.add('hidden');
 
+resetGame();
 //Roling dice function
 roll_Btn_element.addEventListener('click', function () {
   if (playing) {
@@ -69,7 +70,7 @@ hold_Btn_element.addEventListener('click', function () {
     scores[activePlayer] += currentScore;
     document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
     //Check if its above 100 score
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 100) {
       playing = false;
       document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
       document.querySelector(`.player--${activePlayer}`).classList.remove('player-active');
