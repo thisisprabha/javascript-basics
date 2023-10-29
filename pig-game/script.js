@@ -14,7 +14,15 @@ const player_1 = document.querySelector('.player--1');
 
 let currentScore = 0;
 let activePlayer = 0;
-let currentPoints = 0;
+const scores = [0, 0];
+
+const switchPlayer = function () {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  currentScore = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  player_0.classList.toggle('player--active');
+  player_1.classList.toggle('player--active');
+};
 
 //On-start config
 score_Element_0.textContent = 0;
@@ -37,19 +45,20 @@ roll_Btn_element.addEventListener('click', function () {
     document.getElementById(`current--${activePlayer}`).textContent = currentScore;
   } else {
     //switch to next player
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    currentScore = 0;
-    player_0.classList.toggle('player--active');
-    player_1.classList.toggle('player--active');
+    switchPlayer();
   }
 });
 
 hold_Btn_element.addEventListener('click', function () {
   // Add current score to player score
-  document.getElementById(`score--${activePlayer}`).textContent = currentScore;
-  currentPoints = currentScore;
+  scores[activePlayer] += currentScore;
+  document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
   //Check if its above 100 score
-
-  //Switch to next player
+  if (scores[activePlayer] >= 20) {
+    document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
+    document.querySelector(`.player--${activePlayer}`).classList.remove('player-active');
+  } else {
+    //Switch to next player
+    switchPlayer();
+  }
 });
