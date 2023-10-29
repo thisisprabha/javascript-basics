@@ -13,6 +13,8 @@ const player_0 = document.querySelector('.player--0');
 const player_1 = document.querySelector('.player--1');
 
 let currentScore = 0;
+let activePlayer = 0;
+let currentPoints = 0;
 
 //On-start config
 score_Element_0.textContent = 0;
@@ -32,13 +34,22 @@ roll_Btn_element.addEventListener('click', function () {
   if (dice !== 1) {
     //adding dice value to current score
     currentScore += dice;
-    currentScore_0.textContent = currentScore;
+    document.getElementById(`current--${activePlayer}`).textContent = currentScore;
   } else {
     //switch to next player
-    player_0.classList.remove('player--active');
-    player_1.classList.add('player--active');
-    currentScore += dice;
-    currentScore_2.textContent = currentScore;
-    //console.log('removed');
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    currentScore = 0;
+    player_0.classList.toggle('player--active');
+    player_1.classList.toggle('player--active');
   }
+});
+
+hold_Btn_element.addEventListener('click', function () {
+  // Add current score to player score
+  document.getElementById(`score--${activePlayer}`).textContent = currentScore;
+  currentPoints = currentScore;
+  //Check if its above 100 score
+
+  //Switch to next player
 });
