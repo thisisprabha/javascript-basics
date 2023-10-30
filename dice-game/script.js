@@ -93,6 +93,4 @@ new_Btn_element.addEventListener('click', function () {
     document.querySelector(`.player--0`).classList.add('player--active');
     resetGame();
   }
-
-  // document.querySelector(`.player--${activePlayer}`).classList.add('player-active');
 });

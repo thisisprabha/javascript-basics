@@ -45,6 +45,14 @@ section .add-todo {
   border-radius: 4px;
 }
 
+section .showList {
+  padding: 2% 5% 2% 5%;
+  margin-right: 2%;
+  background-color: aquamarine;
+  border: 0;
+  border-radius: 4px;
+}
+
 section .todo-list {
   padding: 2%;
   margin-right: 2%;
@@ -65,6 +73,10 @@ section .added-todo {
   flex-direction: column;
   align-items: center;
   margin: 5% auto;
+}
+
+.floatleft {
+  float: left;
 }
 
 .right {
@@ -115,4 +127,8 @@ section .added-todo {
   margin: 0;
   top: -0%;
   z-index: -1;
+}
+
+#todoList {
+  font-size: 1.5em;
 }
