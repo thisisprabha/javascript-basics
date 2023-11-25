@@ -1,26 +1,34 @@
 'use strict';
 
-// console.log(name);
-// console.log(job);
-// console.log(year);
+console.log(this);
 
-//declaring variables
-// var name = 'Jonas';
-// let job = `Teacher`;
-// const year = 1991;
-
-console.log(addDec(2, 3));
-console.log(addEpr(2, 3));
-console.log(addArrow(2, 3));
-
-// Function Declaration
-
-function addDec(a, b) {
-  return a + b;
-}
-
-const addEpr = function (a, b) {
-  return a + b;
+//regular function
+const calcAge = function (birthyear) {
+  console.log(2023 - birthyear);
+  console.log(this);
 };
 
-const addArrow = (a, b) => a + b;
+// arrow function
+const calcAgeArrow = (birthyear) => {
+  console.log(2023 - birthyear);
+  console.log(this);
+};
+
+//method
+const jonas = {
+  year: 1991,
+  calcAge: function () {
+    console.log(2023 - this.year);
+  },
+};
+
+const devi = {
+  year: 1995,
+};
+
+devi.calcAge = jonas.calcAge; //method borrwoing
+
+calcAge(1991);
+calcAgeArrow(1991);
+jonas.calcAge();
+devi.calcAge();
