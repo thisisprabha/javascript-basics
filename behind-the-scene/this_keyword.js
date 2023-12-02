@@ -28,7 +28,10 @@ const devi = {
 
 devi.calcAge = jonas.calcAge; //method borrwoing
 
+const f = jonas.calcAge;
+
 calcAge(1991);
 calcAgeArrow(1991);
 jonas.calcAge();
 devi.calcAge();
+f();
