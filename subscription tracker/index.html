@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subscription Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>Subscription Tracker</h1>
+
+      <div id="subscription-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required />
+
+        <label for="type">Subscription Type:</label>
+        <input type="text" id="type" required />
+
+        <label for="cost">Cost:</label>
+        <input type="number" id="cost" required />
+
+        <label for="payment-method">Payment Method:</label>
+        <input type="text" id="payment-method" required />
+
+        <label for="billing-period">Billing Period:</label>
+        <input type="text" id="billing-period" required />
+
+        <label for="billing-date">Next Billing Date:</label>
+        <input type="date" id="billing-date" required />
+
+        <button onclick="addSubscription()">Add Subscription</button>
+      </div>
+
+      <div id="subscription-list">
+        <!-- Subscription cards will be dynamically added here -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

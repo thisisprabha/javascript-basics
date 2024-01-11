@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subscription Tracker</title>
+  </head>
+  <body>
+    <h1>Subscription Tracker</h1>
+
+    <div id="subscription-form">
+      <h2>Add/Edit Subscription</h2>
+      <label for="name">Name:</label>
+      <input type="text" id="name" placeholder="Subscription name" required />
+      <label for="cost">Cost ($):</label>
+      <input type="number" id="cost" placeholder="Cost" required />
+      <label for="billing-cycle">Billing Cycle:</label>
+      <select id="billing-cycle">
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+      </select>
+      <label for="payment-method">Payment Method:</label>
+      <input type="text" id="payment-method" placeholder="Payment method" required />
+      <label for="billing-start-date">Billing Start Date:</label>
+      <input type="date" id="billing-start-date" required />
+      <button onclick="addEditSubscription()">Add/Edit Subscription</button>
+    </div>
+
+    <h2>Subscription List</h2>
+    <ul id="subscription-list">
+      <!-- Subscription cards will be dynamically added here -->
+    </ul>
+
+    <script>
+      function addEditSubscription() {
+        var name = document.getElementById('name').value;
+        var cost = document.getElementById('cost').value;
+        var billingCycle = document.getElementById('billing-cycle').value;
+        var paymentMethod = document.getElementById('payment-method').value;
+        var billingStartDate = document.getElementById('billing-start-date').value;
+
+        var subscription = {
+          name: name,
+          cost: cost,
+          billingCycle: billingCycle,
+          paymentMethod: paymentMethod,
+          billingStartDate: billingStartDate,
+        };
+
+        // Add subscription to the list
+        addSubscriptionToList(subscription);
+
+        // Clear form fields
+        clearFormFields();
+      }
+
+      function addSubscriptionToList(subscription) {
+        var subscriptionList = document.getElementById('subscription-list');
+        var li = document.createElement('li');
+        li.innerHTML = `
+                <span id="name">${subscription.name}</span> - 
+                Cost: $<span id="cost">${subscription.cost}</span> - 
+                Billing Cycle: <span id="billing-cycle">${subscription.billingCycle}</span> - 
+                Payment Method: <span id="payment-method">${subscription.paymentMethod}</span> - 
+                Next Bill Date: ${calculateNextBillDate(
+                  subscription.billingStartDate,
+                  subscription.billingCycle
+                )}
+                <button onclick="editSubscription(this)">Edit</button>
+                <button onclick="deleteSubscription(this)">Delete</button>
+            `;
+        subscriptionList.appendChild(li);
+      }
+
+      function clearFormFields() {
+        document.getElementById('name').value = '';
+        document.getElementById('cost').value = '';
+        document.getElementById('billing-cycle').value = 'monthly';
+        document.getElementById('payment-method').value = '';
+        document.getElementById('billing-start-date').value = '';
+      }
+
+      function editSubscription(button) {
+        var li = button.parentNode;
+        var spans = li.getElementsByTagName('span');
+
+        // Create editable input fields and selects
+        var nameInput = createEditableInput(spans[0].textContent);
+        var costInput = createEditableInput(spans[1].textContent);
+        var billingCycleInput = createEditableSelect(spans[2].textContent);
+        var paymentMethodInput = createEditableInput(spans[3].textContent);
+        var billingStartDateInput = createEditableInput(spans[4].textContent);
+
+        // Replace spans with input fields and selects
+        spans[0].replaceWith(nameInput);
+        spans[1].replaceWith(costInput);
+        spans[2].replaceWith(billingCycleInput);
+        spans[3].replaceWith(paymentMethodInput);
+        spans[4].replaceWith(billingStartDateInput);
+
+        // Change the button to "Save"
+        button.innerHTML = 'Save';
+        button.onclick = function () {
+          saveSubscription(this);
+        };
+      }
+
+      function createEditableInput(value, dataType) {
+        var input = document.createElement('input');
+        input.type = dataType || 'text';
+        input.value = value;
+        return input;
+      }
+
+      var nameInput = createEditableInput(spans[0].textContent);
+      var costInput = createEditableInput(spans[1].textContent);
+      var billingCycleInput = createEditableSelect(spans[2].textContent);
+      var paymentMethodInput = createEditableInput(spans[3].textContent, 'text'); // Specify dataType as 'text' for payment method
+      var billingStartDateInput = createEditableInput(spans[4].textContent, 'date'); // Specify dataType as 'date' for billing start date
+
+      function createEditableSelect(selectedValue) {
+        var select = document.createElement('select');
+        var monthlyOption = document.createElement('option');
+        monthlyOption.value = 'monthly';
+        monthlyOption.text = 'Monthly';
+        var yearlyOption = document.createElement('option');
+        yearlyOption.value = 'yearly';
+        yearlyOption.text = 'Yearly';
+        select.add(monthlyOption);
+        select.add(yearlyOption);
+        select.value = selectedValue.toLowerCase();
+        return select;
+      }
+
+      function saveSubscription(button) {
+        var li = button.parentNode;
+        var inputs = li.getElementsByTagName('input');
+        var selects = li.getElementsByTagName('select');
+
+        // Create a new subscription object
+        var subscription = {
+          name: inputs[0].value,
+          cost: inputs[1].value,
+          billingCycle: selects[0].value,
+          paymentMethod: inputs[2].value,
+          billingStartDate: inputs[3].value,
+        };
+
+        // Add the edited subscription back to the list
+        addSubscriptionToList(subscription);
+
+        // Remove the editable input fields
+        li.parentNode.removeChild(li);
+
+        // Reset the button to "Edit"
+        button.innerHTML = 'Edit';
+        button.onclick = function () {
+          editSubscription(this);
+        };
+      }
+
+      function deleteSubscription(button) {
+        var li = button.parentNode;
+        li.parentNode.removeChild(li);
+      }
+
+      function calculateNextBillDate(startDate, billingCycle) {
+        // Implement your logic to calculate the next bill date based on the billing start date and cycle
+        // This is a placeholder function, and you may need to adjust it based on your requirements
+        return 'Next bill date calculation';
+      }
+    </script>
+  </body>
+</html>
