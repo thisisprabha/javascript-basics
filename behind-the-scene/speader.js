@@ -42,7 +42,11 @@ const ingredients = [
   prompt('ingredient 2'),
   prompt('ingredient 3'),
 ];
+
+const newRestaurant = { foundedIN: 1991, ...restaurant, founder: `Guispe` };
+const restaurantCopy = { ...newRestaurant };
+console.log(restaurantCopy);
 console.log(restaurant.orderitems);
 restaurant.orderPasta(ingredients[0], ingredients[1], '');
 restaurant.orderPasta(...ingredients);
-// console.log(restaurant.orderitems);
+console.log(restaurant.orderitems);
