@@ -4,29 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Subscription Tracker</title>
+    <link rel="stylesheet" type="text/css" href="style3.css" />
     <style>
       /* Add your CSS styles here */
-      .popover {
+      .modal {
         display: none;
-        position: absolute;
-        background-color: #f1f1f1;
-        border: 1px solid #d4d4d4;
-        padding: 10px;
+        position: fixed;
         z-index: 1;
-      }
-
-      .subscription-item {
-        position: relative;
-        margin-bottom: 10px;
-      }
-
-      .subscription-item .popover {
-        top: 100%;
         left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
       }
 
-      .subscription-item:hover .popover {
-        display: block;
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
       }
     </style>
   </head>
@@ -54,6 +68,30 @@
 
     <div id="subscriptionList">
       <!-- List of saved subscriptions will be displayed here -->
+    </div>
+
+    <!-- Modal for Editing -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Edit Subscription</h2>
+        <label for="editSubscriptionName">Subscription Name:</label>
+        <input type="text" id="editSubscriptionName" />
+
+        <label for="editBillingCycle">Billing Cycle:</label>
+        <select id="editBillingCycle">
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+
+        <label for="editCost">Cost (in dollars):</label>
+        <input type="number" id="editCost" />
+
+        <label for="editBillingDate">Billing Date:</label>
+        <input type="number" id="editBillingDate" min="1" max="31" />
+
+        <button onclick="updateSubscription()">Update</button>
+      </div>
     </div>
 
     <script>
@@ -110,8 +148,8 @@
             <strong>${subscription.name}</strong>
             (${subscription.cycle} - $${subscription.cost})
             - Billing Date: ${subscription.date}
-            <button onclick="editSubscription(${subscriptionList.children.length})">Edit</button>
-            <button onclick="deleteSubscription(${subscriptionList.children.length})">Delete</button>
+            <button onclick="editSubscription(${subscriptionList.children.length})"><i class="fas fa-edit"></i>Edit</button>
+            <button onclick="deleteSubscription(${subscriptionList.children.length})"><i class="fas fa-trash-alt">Delete</i></button>
           `;
           subscriptionList.appendChild(subscriptionItem);
 
@@ -127,10 +165,11 @@
       }
 
       function editSubscription(index) {
-        var subscriptionList = document.getElementById('subscriptionList');
-        var subscriptionItem = subscriptionList.children[index];
+        currentEditingIndex = index;
 
         // Extract subscription details from the displayed text
+        var subscriptionList = document.getElementById('subscriptionList');
+        var subscriptionItem = subscriptionList.children[index];
         var subscriptionDetails = subscriptionItem.textContent
           .replace('Edit', '')
           .replace('Delete', '')
@@ -143,53 +182,54 @@
         var cost = parseFloat(subscriptionDetails[1].replace('($', '').replace(')', '').trim());
         var billingDate = parseInt(subscriptionDetails[2].replace('Billing Date: ', '').trim());
 
-        // Populate the form with the extracted details
-        document.getElementById('subscriptionName').value = name;
-        document.getElementById('billingCycle').value = cycle;
-        document.getElementById('cost').value = cost;
-        document.getElementById('billingDate').value = billingDate;
+        // Populate the modal with the extracted details
+        document.getElementById('editSubscriptionName').value = name;
+        document.getElementById('editBillingCycle').value = cycle;
+        document.getElementById('editCost').value = cost;
+        document.getElementById('editBillingDate').value = billingDate;
 
-        // Display the popover for editing
-        showPopover(subscriptionItem, index);
+        // Show the modal for editing
+        document.getElementById('editModal').style.display = 'block';
+      }
+
+      function updateSubscription() {
+        // Update the subscription in the list based on the currentEditingIndex
+        var subscriptionList = document.getElementById('subscriptionList');
+        var subscriptionItem = subscriptionList.children[currentEditingIndex];
+
+        var newName = document.getElementById('editSubscriptionName').value;
+        var newCycle = document.getElementById('editBillingCycle').value;
+        var newCost = document.getElementById('editCost').value;
+        var newBillingDate = document.getElementById('editBillingDate').value;
+
+        // Update the subscription details in the displayed text
+        subscriptionItem.innerHTML = `
+        <strong>${newName}</strong> 
+        (${newCycle} - $${newCost}) 
+        - Billing Date: ${newBillingDate}
+        <button onclick="editSubscription(${currentEditingIndex})">Edit</button>
+        <button onclick="deleteSubscription(${currentEditingIndex})">Delete</button>
+      `;
+
+        // Close the modal after updating
+        closeModal();
       }
 
       function deleteSubscription(index) {
         var subscriptionList = document.getElementById('subscriptionList');
         subscriptionList.removeChild(subscriptionList.children[index]);
       }
-      function showPopover(subscriptionItem, index) {
-        var popover = document.createElement('div');
-        popover.className = 'popover';
-        popover.innerHTML = `
-        <label for="editBillingDate">New Billing Date:</label>
-        <input type="number" id="editBillingDate" min="1" max="31">
-        <button onclick="updateSubscription(${index})">Update</button>
-      `;
 
-        subscriptionItem.appendChild(popover);
+      function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
       }
 
-      function updateSubscription(index) {
-        var subscriptionList = document.getElementById('subscriptionList');
-        var subscriptionItem = subscriptionList.children[index];
-        var newBillingDate = document.getElementById('editBillingDate').value;
-
-        if (newBillingDate) {
-          // Update the billing date in the displayed text
-          subscriptionItem.innerHTML = `
-          <strong>${document.getElementById('subscriptionName').value}</strong> 
-          (${document.getElementById('billingCycle').value} - $${
-            document.getElementById('cost').value
-          }) 
-          - Billing Date: ${newBillingDate}
-          <button onclick="editSubscription(${index})">Edit</button>
-          <button onclick="deleteSubscription(${index})">Delete</button>
-        `;
+      window.onclick = function (event) {
+        // Close the modal if the user clicks outside the modal
+        if (event.target === document.getElementById('editModal')) {
+          closeModal();
         }
-
-        // Remove the popover
-        subscriptionItem.removeChild(subscriptionItem.getElementsByClassName('popover')[0]);
-      }
+      };
     </script>
   </body>
 </html>
