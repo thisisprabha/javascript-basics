@@ -78,3 +78,7 @@ console.log(values);
 
 const entry = Object.entries(restaurant.openingHours);
 console.log(entry);
+
+for (const x of entry) {
+  console.log(x);
+}
