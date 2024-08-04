@@ -21,5 +21,31 @@ const person_Name = function (name) {
   console.log(name[0].toUpperCase() + name.slice(1).toLowerCase());
 };
 
+const annoucement = `All passengers come to boarding door 81, I repeat door 81`;
+
+console.log(annoucement.replaceAll(`door`, `Gate`));
+console.log(annoucement.replace(/door/g, `gate`)); //relace strings from old to new here...
+
+const airplane = `Airbus d720`;
+console.log(airplane.includes(`Bus`));
+console.log(airplane.includes(`Boeing`));
+console.log(airplane.startsWith(`Air`));
+
+if (airplane.startsWith(`Air`) && airplane.endsWith(`d720`)) {
+  //and means plus
+  console.log(`Its airbus plane`);
+} else console.log(`you going to die!`);
+
 person_Name(`prABHA`);
 person_Name(`Jhonny Bravo`);
+
+//check baggage items if any one carries a gun,
+const baggage = function (items) {
+  const checkbaggage = items.toLowerCase();
+  if (checkbaggage.includes(`gun`) || checkbaggage.includes(`knife`)) {
+    console.log(`Get out from the plane`);
+  } else console.log(`Welcome aboard!`);
+};
+baggage(`I have a makeup kit, spray kit, knife and water bottle`);
+baggage(`I have bread, pair of T.shirt and pair of pants`);
+baggage(`I have pair of trousers with shirt and also i have a gun for my protection`);
