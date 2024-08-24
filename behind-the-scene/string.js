@@ -26,3 +26,16 @@ person_Name(`Jhonny Bravo`);
 console.log(`all +is +well`.split(`+`));
 const [firstName, lastName] = `William Buthher`.split(' ');
 console.log(`Mr. ` + firstName, lastName.toUpperCase());
+
+//changing capitalize names
+function capitalizeName(name) {
+  let names = name.split(` `);
+  let finalName = [];
+  for (let n of names) {
+    finalName.push(n[0].toUpperCase() + n.slice(1).toLowerCase());
+    // finalName.join();
+  }
+  console.log(finalName.join(` `));
+}
+capitalizeName(`mr. prabha karan`);
+capitalizeName(`jhon lenon lord`);
