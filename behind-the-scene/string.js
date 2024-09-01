@@ -16,6 +16,7 @@ const UPPER_CASE = actual_String.toUpperCase();
 // console.log(lower_Case.slice(12, 17));
 
 // Fix Capitalisation
+
 const person_Name = function (name) {
   console.log(name[0].toUpperCase() + name.slice(1).toLowerCase());
 };
